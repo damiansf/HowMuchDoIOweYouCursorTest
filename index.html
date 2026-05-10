@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split — group expenses</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="header__text">
+          <h1 class="logo">Split</h1>
+          <p class="tagline">Track shared costs and see who owes whom.</p>
+        </div>
+        <div class="header__actions">
+          <button type="button" class="btn btn--ghost" id="btn-export" title="Download backup">
+            Export
+          </button>
+          <label class="btn btn--ghost btn--file">
+            Import
+            <input type="file" id="input-import" accept="application/json" hidden />
+          </label>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="card" aria-labelledby="members-heading">
+          <h2 id="members-heading" class="card__title">People</h2>
+          <p class="card__hint">Add everyone in your group. They can appear in expenses and balances.</p>
+          <form id="form-member" class="row-form">
+            <input
+              type="text"
+              id="input-member-name"
+              class="input"
+              placeholder="Name"
+              autocomplete="name"
+              maxlength="48"
+              required
+            />
+            <button type="submit" class="btn btn--primary">Add</button>
+          </form>
+          <ul id="list-members" class="chip-list" aria-live="polite"></ul>
+        </section>
+
+        <section class="card" aria-labelledby="expense-heading">
+          <h2 id="expense-heading" class="card__title">New expense</h2>
+          <form id="form-expense" class="stack-form">
+            <label class="field">
+              <span class="field__label">What was it?</span>
+              <input
+                type="text"
+                id="input-expense-desc"
+                class="input"
+                placeholder="Dinner, groceries, rent…"
+                maxlength="120"
+                required
+              />
+            </label>
+            <label class="field">
+              <span class="field__label">Amount</span>
+              <input type="number" id="input-expense-amount" class="input" min="0.01" step="0.01" required />
+            </label>
+            <label class="field">
+              <span class="field__label">Paid by</span>
+              <select id="select-payer" class="input" required></select>
+            </label>
+            <fieldset class="field field--fieldset">
+              <legend class="field__label">Split between</legend>
+              <p class="field__hint">Everyone checked owes an equal share.</p>
+              <div id="split-checkboxes" class="checkbox-grid"></div>
+            </fieldset>
+            <button type="submit" class="btn btn--primary btn--wide">Add expense</button>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="history-heading">
+          <h2 id="history-heading" class="card__title">Expenses</h2>
+          <div id="expense-empty" class="empty" hidden>No expenses yet.</div>
+          <ul id="list-expenses" class="expense-list" aria-live="polite"></ul>
+        </section>
+
+        <section class="card card--balances" aria-labelledby="balances-heading">
+          <h2 id="balances-heading" class="card__title">Balances</h2>
+          <p class="card__hint">Positive means others owe that person; negative means they owe the group.</p>
+          <ul id="list-balances" class="balance-list"></ul>
+        </section>
+
+        <section class="card" aria-labelledby="settle-heading">
+          <h2 id="settle-heading" class="card__title">Settle up</h2>
+          <p class="card__hint">A simple way to zero out balances with the fewest transfers.</p>
+          <div id="settle-empty" class="empty" hidden>Add people and expenses to see suggested payments.</div>
+          <ol id="list-settlements" class="settlement-list"></ol>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Data stays in this browser unless you export it.</p>
+      </footer>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
