@@ -1,4 +1,5 @@
-const STORAGE_KEY = "split-expenses-v1";
+const STORAGE_KEY = "howmuchdoioweyou-cursor-test-v1";
+const LEGACY_STORAGE_KEY = "split-expenses-v1";
 
 /** @typedef {{ id: string, name: string }} Member */
 /** @typedef {{ id: string, description: string, amount: number, paidById: string, participantIds: string[] }} Expense */
@@ -12,7 +13,8 @@ function uid() {
 
 function load() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw =
+      localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.members) && Array.isArray(parsed.expenses)) {
@@ -298,7 +300,7 @@ elExport.addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `split-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `howmuchdoioweyou-cursor-test-backup-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(a.href);
 });
